@@ -1,11 +1,19 @@
 import express, { Request, Response } from "express";
 import { createClient } from "@supabase/supabase-js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const port = 3000;
 
-const supabaseUrl = "https://your-supabase-url.supabase.co";
-const supabaseKey = "your-anon-key";
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error("Please provide SUPABASE_URL and SUPABASE_KEY");
+}
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 app.use(express.json());
